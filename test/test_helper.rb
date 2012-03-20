@@ -121,11 +121,13 @@ def setup_db
     
     create_table :paranoid_many_many_parent_lefts do |t|
       t.string :name
+      t.datetime :deleted_at
       t.timestamps
     end
 
     create_table :paranoid_many_many_parent_rights do |t|
       t.string :name
+      t.datetime :deleted_at
       t.timestamps
     end
     
@@ -296,12 +298,14 @@ end
 
 
 class ParanoidManyManyParentLeft < ActiveRecord::Base
-  has_many :paranoid_many_many_children
+  acts_as_paranoid
+  has_many :paranoid_many_many_children, :dependent => :destroy
   has_many :paranoid_many_many_parent_rights, :through => :paranoid_many_many_children
 end
 
 class ParanoidManyManyParentRight < ActiveRecord::Base
-  has_many :paranoid_many_many_children
+  acts_as_paranoid
+  has_many :paranoid_many_many_children, :dependent => :destroy
   has_many :paranoid_many_many_parent_lefts, :through => :paranoid_many_many_children
 end
 

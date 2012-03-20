@@ -135,6 +135,16 @@ class MoreParanoidTest < ParanoidBaseTest
     assert_paranoid_deletion(child)
   end
   
+  test "associated object delete is paranoid" do
+    left = ParanoidManyManyParentLeft.create
+    right = ParanoidManyManyParentRight.create
+    left.paranoid_many_many_parent_rights << right
+    right.delete
+    left.reload
+    right.reload
+    assert_paranoid_deletion(right)
+  end
+  
   test "delete by multiple id is paranoid" do
     model_a = ParanoidBelongsDependant.create
     model_b = ParanoidBelongsDependant.create
