@@ -313,6 +313,8 @@ class ParanoidManyManyChild < ActiveRecord::Base
   acts_as_paranoid
   belongs_to :paranoid_many_many_parent_left
   belongs_to :paranoid_many_many_parent_right
+  validates_as_paranoid
+  validates_uniqueness_of_without_deleted :paranoid_many_many_parent_right
 end
 
 class ParanoidWithScopedValidation < ActiveRecord::Base

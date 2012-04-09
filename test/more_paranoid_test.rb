@@ -1,6 +1,17 @@
 require 'test_helper'
 
 class MoreParanoidTest < ParanoidBaseTest
+  test "can reassign a many to many paranoid association" do
+    left = ParanoidManyManyParentLeft.create
+    right = ParanoidManyManyParentRight.create
+    left.paranoid_many_many_parent_rights << right
+    left.paranoid_many_many_parent_rights.clear
+    
+    assert_nothing_raised "Cannot reassign association" do
+      left.paranoid_many_many_parent_rights << right
+    end
+  end
+  
   test "only find associated records when finding with paranoid deleted" do
     parent = ParanoidBelongsDependant.create
     child = ParanoidHasManyDependant.create
