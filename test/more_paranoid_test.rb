@@ -149,7 +149,7 @@ class MoreParanoidTest < ParanoidBaseTest
   test "associated object delete is paranoid" do
     left = ParanoidManyManyParentLeft.create
     right = ParanoidManyManyParentRight.create
-    left.paranoid_many_many_parent_rights << rightParanoidManyManyChild
+    left.paranoid_many_many_parent_rights << right
     right.delete
     left.reload
     right.reload
