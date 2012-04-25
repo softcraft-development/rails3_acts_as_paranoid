@@ -93,6 +93,7 @@ module ActsAsParanoid
     
     include InstanceMethods
     extend ClassMethods
+    validates_as_paranoid
   end
 
   module ClassMethods

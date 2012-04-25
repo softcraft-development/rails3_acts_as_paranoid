@@ -1,4 +1,5 @@
 require 'active_support/core_ext/array/wrap'
+require "active_record/validations/uniqueness"
 
 module ParanoidValidations
   class UniquenessWithoutDeletedValidator < ActiveRecord::Validations::UniquenessValidator
@@ -34,6 +35,12 @@ module ParanoidValidations
   module ClassMethods
     def validates_uniqueness_of_without_deleted(*attr_names)
       validates_with UniquenessWithoutDeletedValidator, _merge_attributes(attr_names)
+    end
+    def validates_uniqueness_of_with_deleted(*attr_names)
+      validates_with ActiveRecord::Validations::UniquenessValidator, _merge_attributes(attr_names) 
+    end
+    def validates_uniqueness_of(*attr_names)
+      validates_uniqueness_of_without_deleted(*attr_names)
     end
   end
 end
